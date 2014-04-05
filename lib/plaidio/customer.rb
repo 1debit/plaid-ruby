@@ -18,6 +18,17 @@ module Plaidio
       return parse_response(@response,1)
     end
 
+    def mfa_auth_step(access_token,code)
+      @mfa = code
+      post("/auth/step", access_token, mfa: @mfa)
+      return parse_response(@response,1)
+    end
+
+    def auth(access_token)
+      get('/auth', access_token)
+      return parse_response(@response,2)
+    end
+
     def get_transactions(access_token)
       get('/connect', access_token)
       return parse_response(@response,2)
@@ -55,6 +66,9 @@ module Plaidio
           @parsed_response[:code] = response.code
           response = JSON.parse(response)
           @parsed_response[:transactions] = response["transactions"]
+          @parsed_response[:meta] = response["meta"]
+          @parsed_response[:numbers] = response["numbers"]
+          @parsed_response[:balance] = response["balance"]
           return @parsed_response
         else
           @parsed_response = Hash.new

@@ -15,6 +15,11 @@ module Plaidio
       return parse_response(@response)
     end
 
+    def add_ach_account(type,username,password,email)
+      post('/auth',type,username,password,email)
+      return parse_response(@response)
+    end
+
     def get_place(id)
       get('/entity',id)
       return parse_place(@response)
@@ -30,6 +35,9 @@ module Plaidio
         @parsed_response[:access_token] = response["access_token"]
         @parsed_response[:accounts] = response["accounts"]
         @parsed_response[:transactions] = response["transactions"]
+        @parsed_response[:balance] = response["balance"]
+        @parsed_response[:meta] = response["meta"]
+        @parsed_response[:numbers] = response["numbers"]
         return @parsed_response
       when 201  
         @parsed_response = Hash.new
