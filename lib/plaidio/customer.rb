@@ -24,11 +24,6 @@ module Plaidio
       return parse_response(@response,1)
     end
 
-    def auth(access_token)
-      get('/auth', access_token)
-      return parse_response(@response,2)
-    end
-
     def get_transactions(access_token)
       get('/connect', access_token)
       return parse_response(@response,2)
@@ -37,6 +32,11 @@ module Plaidio
     def delete_account(access_token)
       delete('/connect', access_token)
       return parse_response(@response,3)
+    end
+
+    def auth(access_token)
+      get('/auth', access_token)
+      return parse_response(@response,4)
     end
 
     protected
@@ -66,9 +66,6 @@ module Plaidio
           @parsed_response[:code] = response.code
           response = JSON.parse(response)
           @parsed_response[:transactions] = response["transactions"]
-          @parsed_response[:meta] = response["meta"]
-          @parsed_response[:numbers] = response["numbers"]
-          @parsed_response[:balance] = response["balance"]
           return @parsed_response
         else
           @parsed_response = Hash.new
@@ -83,6 +80,19 @@ module Plaidio
           @parsed_response[:code] = response.code
           response = JSON.parse(response)
           @parsed_response[:message] = response
+          return @parsed_response
+        else
+          @parsed_response = Hash.new
+          @parsed_response[:code] = response.code
+          @parsed_response[:message] = response
+          return @parsed_response
+        end
+      when 4
+        case repsonse.code
+        when 200
+          @parsed_response[:code] = response.code
+          response = JSON.parse(response)
+          @parsed_response[:accounts] = response["accounts"]
           return @parsed_response
         else
           @parsed_response = Hash.new

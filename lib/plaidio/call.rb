@@ -35,9 +35,7 @@ module Plaidio
         @parsed_response[:access_token] = response["access_token"]
         @parsed_response[:accounts] = response["accounts"]
         @parsed_response[:transactions] = response["transactions"]
-        @parsed_response[:balance] = response["balance"]
-        @parsed_response[:meta] = response["meta"]
-        @parsed_response[:numbers] = response["numbers"]
+        @parsed_response[:accounts] = response["accounts"]
         return @parsed_response
       when 201  
         @parsed_response = Hash.new
