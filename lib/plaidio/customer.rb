@@ -89,7 +89,8 @@ module Plaidio
         end
       when 4
         case response.code
-        when 200
+          when 200
+          @parsed_response = Hash.new
           @parsed_response[:code] = response.code
           response = JSON.parse(response)
           @parsed_response[:accounts] = response["accounts"]
