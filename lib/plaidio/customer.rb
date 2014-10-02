@@ -39,6 +39,11 @@ module Plaidio
       return parse_response(@response,4)
     end
 
+    def info(access_token)
+      get('/info', access_token)
+      return parse_response(@response,5)
+    end
+
     protected
 
     def parse_response(response,method)
@@ -101,6 +106,21 @@ module Plaidio
           @parsed_response[:message] = response
           return @parsed_response
         end
+      when 5
+        case response.code
+          when 200
+          @parsed_response = Hash.new
+          @parsed_response[:code] = response.code
+          response = JSON.parse(response)
+          @parsed_response[:accounts] = response["accounts"]
+          @parsed_response[:info] = response['info']
+          return @parsed_response
+        else
+          @parsed_response = Hash.new
+          @parsed_response[:code] = response.code
+          @parsed_response[:message] = response
+          return @parsed_response
+        end
       end
     end
 
@@ -108,7 +128,8 @@ module Plaidio
 
     def get(path,access_token,options={})
       url = BASE_URL + path
-      @response = RestClient.get(url,:params => {:client_id => self.instance_variable_get(:'@customer_id'), :secret => self.instance_variable_get(:'@secret'), :access_token => access_token})
+      params =  {:client_id => self.instance_variable_get(:'@customer_id'), :secret => self.instance_variable_get(:'@secret'), :access_token => access_token}
+      @response = RestClient.get(url,:params =>params)
       return @response
     end
 

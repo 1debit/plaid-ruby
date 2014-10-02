@@ -71,7 +71,7 @@ module Plaidio
 
     def post(path,type,username,password,email)
       url = BASE_URL + path
-      @response = RestClient.post url, :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :type => type ,:credentials => {:username => username, :password => password} ,:email => email
+      @response = RestClient.post url, :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :type => type ,:credentials => '{"username":"' + username + '", "password":"' + password + '"}', :email => email
       return @response
     end
 
