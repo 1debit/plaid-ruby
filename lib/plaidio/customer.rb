@@ -44,6 +44,11 @@ module Plaidio
       return parse_response(@response,5)
     end
 
+    def upgrade(access_token,level)
+      post('/upgrade', access_token, {upgrade_to: level, login: true})
+      return parse_response(@response, 4)
+    end
+
     protected
 
     def parse_response(response,method)
@@ -135,7 +140,9 @@ module Plaidio
 
     def post(path,access_token,options={})
       url = BASE_URL + path
-      @response = RestClient.post url, :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :access_token => access_token, :mfa => @mfa
+      params = { :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :access_token => access_token, :mfa => @mfa }
+      params.merge(options)
+      @response = RestClient.post url, params
       return @response
     end
 
