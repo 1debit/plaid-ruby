@@ -142,6 +142,7 @@ module Plaidio
       url = BASE_URL + path
       params = { :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :access_token => access_token, :mfa => @mfa }
       params.merge(options)
+      Rails.logger.info "Restclient.post url=#{url}, params=#{params}"
       @response = RestClient.post url, params
       return @response
     end
