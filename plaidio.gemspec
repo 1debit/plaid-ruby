@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'plaidio'
-  s.version     = '0.1.5'
-  s.date        = '2014-12-31'
+  s.version     = '0.1.6'
+  s.date        = '2015-07-30'
   s.summary     = "Plaid.io api gem"
   s.description = "A simple to use ruby wrapper for Plaid.io API."
   s.authors     = ["Justin Crites", "Gamble McAdam"]
