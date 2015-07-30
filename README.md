@@ -27,7 +27,6 @@ Pop this into your enviornment file.
 Plaidio.config do |config|
   config.customer_id = keys[CUSTOMER_ID]
   config.secret = keys[SECRET]
-  config.public_key = keys[PUBLIC_KEY]
 end
 ```
 
