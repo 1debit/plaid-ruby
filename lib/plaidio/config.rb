@@ -1,8 +1,8 @@
 module Plaidio
   module Configure
-    attr_writer :customer_id, :secret, :public_key
+    attr_writer :customer_id, :secret
 
-    KEYS = [:customer_id, :secret, :public_key]
+    KEYS = [:customer_id, :secret]
 
     def config
       yield self
