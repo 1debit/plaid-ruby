@@ -5,7 +5,7 @@ require 'plaidio/customer'
 require 'rest_client'
 
 module Plaidio
-  autoload :Connection, 'plaid/connection'
+  autoload :Connection, 'plaidio/connection'
   class << self
     include Plaidio::Configure
 
