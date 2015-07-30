@@ -1,6 +1,6 @@
 module Plaidio
   module Configure
-    attr_writer :customer_id, :secret
+    attr_accessor :customer_id, :secret
 
     KEYS = [:customer_id, :secret]
 
