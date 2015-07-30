@@ -2,7 +2,11 @@ require 'plaidio/config'
 require 'plaidio/call'
 require 'plaidio/customer'
 require 'rest_client'
+require 'plaidio/connection'
+require 'plaidio/errors'
+
 module Plaidio
+  include Plaidio::Connection
   class << self
     include Plaidio::Configure
 
