@@ -21,7 +21,7 @@ module Plaidio
       payload = { public_token: public_token }
       
       res = Connection.post('exchange_token', payload)
-      ExchangeTokenResponse.new(res)
+      res
     end
     
   end
