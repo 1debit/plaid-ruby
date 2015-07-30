@@ -15,6 +15,14 @@ module Plaidio
     def call
       @call = Plaidio::Call.new
     end
-
+    
+    # Exchange a Plaid Link public_token for an access_token
+    def exchange_token(public_token)
+      payload = { public_token: public_token }
+      
+      res = Connection.post('exchange_token', payload)
+      ExchangeTokenResponse.new(res)
+    end
+    
   end
 end
