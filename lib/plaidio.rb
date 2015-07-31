@@ -1,11 +1,9 @@
 require 'plaidio/config'
-require 'plaidio/errors'
 require 'plaidio/call'
 require 'plaidio/customer'
 require 'rest_client'
 
 module Plaidio
-  autoload :Connection, 'plaidio/connection'
   class << self
     include Plaidio::Configure
 
@@ -17,14 +15,6 @@ module Plaidio
     # Defined for generic calls without access_tokens required. Ex: Plaidio.call.add_accounts(username,password,type)
     def call
       @call = Plaidio::Call.new
-    end
-    
-    # Exchange a Plaid Link public_token for an access_token
-    def exchange_token(public_token)
-      payload = { public_token: public_token }
-      
-      res = Connection.post('exchange_token', payload)
-      res
     end
     
   end
