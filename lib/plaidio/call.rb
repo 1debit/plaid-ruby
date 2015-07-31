@@ -24,8 +24,29 @@ module Plaidio
       get('/entity',id)
       return parse_place(@response)
     end
+    
+    def exchange_token(public_token)
+      post_to_exchange(public_token)
+      return parse_exchange(@response)
+    end
+    
     protected
-
+    
+    def parse_exchange(response)
+      case response.code
+      when 200
+        @parsed_response = Hash.new
+        @parsed_response[:code] = response.code
+        response = JSON.parse(response)
+        @parsed_response[:access_token] = response["access_token"]
+      else
+        @parsed_response = Hash.new
+        @parsed_response[:code] = response.code
+        @parsed_response[:message] = response
+        return @parsed_response
+      end
+    end
+    
     def parse_response(response)
       case response.code
       when 200
@@ -68,7 +89,13 @@ module Plaidio
     end
 
     private
-
+    
+    def post_to_exchange(public_token)
+      url = BASE_URL + '/exchange_token'
+      @response = RestClient.post url, :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :public_token => public_token
+      return @response
+    end
+    
     def post(path,type,username,password,email)
       url = BASE_URL + path
       @response = RestClient.post url, :client_id => self.instance_variable_get(:'@customer_id') ,:secret => self.instance_variable_get(:'@secret'), :type => type ,:credentials => '{"username":"' + username + '", "password":"' + password + '"}', :email => email
